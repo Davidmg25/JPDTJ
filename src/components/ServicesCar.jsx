@@ -126,11 +126,11 @@ const ServicesCar = () => {
         py: 4,
       }}
     >
-      <Typography variant="h4" sx={{ fontWeight: "bold", mb: 2 }}>
+      <Typography variant="h4" sx={{ fontWeight: "bold", mb: 2 ,color:"FFC300"  }}>
         Select A Car Detailing Package
       </Typography>
 
-      <Typography variant="body1" color="FFC300" sx={{ mb: 3 }}>
+      <Typography variant="body1"  sx={{ mb: 3, color:"FFC300" }}>
         Choose from one of our packages to begin your ultimate car detailing experience.
       </Typography>
 
