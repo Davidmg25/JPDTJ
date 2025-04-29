@@ -130,7 +130,7 @@ const ServicesCar = () => {
         Select A Car Detailing Package
       </Typography>
 
-      <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+      <Typography variant="body1" color="FFC300" sx={{ mb: 3 }}>
         Choose from one of our packages to begin your ultimate car detailing experience.
       </Typography>
 
