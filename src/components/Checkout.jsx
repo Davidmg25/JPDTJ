@@ -17,6 +17,7 @@ import { useState } from "react";
 import { AVAILABLE_COLORS } from "../img/colors";
 import { addOns } from "../components/Adds";
 import '../index'
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 const steps = [
   "Select Package",
