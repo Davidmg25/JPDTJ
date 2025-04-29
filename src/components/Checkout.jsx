@@ -364,6 +364,8 @@ const Checkout = () => {
       <Box sx={{ width: "100%", borderLeft: "1px solid #ddd", paddingLeft: "20px" }}>
         <Stepper activeStep={step} orientation="vertical">
           {steps.map((stepLabel, index) => (
+
+            
             <Step key={index}>
               <StepLabel>{stepLabel}</StepLabel>
             </Step>
