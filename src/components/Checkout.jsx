@@ -378,7 +378,7 @@ const Checkout = () => {
             sx={{ backgroundColor: "#FF333", color: "white", fontWeight: "bold" }}
             onClick={() => {
               if (isLastStep) {
-                const whatsappUrl = `https://wa.me/573045635147?text=${encodeURIComponent(generateWhatsappMessage())}`;
+                const whatsappUrl = `https://wa.me/17865990988?text=${encodeURIComponent(generateWhatsappMessage())}`;
                 window.location.href = whatsappUrl;
               } else {
                 handleNext();

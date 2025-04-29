@@ -5,15 +5,13 @@ import {
   Card,
   CardContent,
   Button,
-  useMediaQuery,
-  useTheme,
-  ToggleButton,
-  ToggleButtonGroup,
   Modal,
   Select,
   MenuItem,
   FormControl,
   InputLabel,
+  ToggleButtonGroup,
+  ToggleButton
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import useFirestoreCars from "../server/hooks";
@@ -91,8 +89,6 @@ const ServicesCar = () => {
     img: "",
   });
 
-  const theme = useTheme();
-  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
   const navigate = useNavigate();
   const { makes, models } = useFirestoreCars(selectedCar, setSelectedCar);
 
@@ -120,10 +116,20 @@ const ServicesCar = () => {
   };
 
   return (
-    <Box sx={{ textAlign: "center", padding: "40px" }}>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        backgroundColor: "#000",
+        color: "#fff",
+        textAlign: "center",
+        px: 2,
+        py: 4,
+      }}
+    >
       <Typography variant="h4" sx={{ fontWeight: "bold", mb: 2 }}>
         Select A Car Detailing Package
       </Typography>
+
       <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
         Choose from one of our packages to begin your ultimate car detailing experience.
       </Typography>
@@ -138,11 +144,7 @@ const ServicesCar = () => {
           mb: 3,
         }}
       >
-        <ToggleButtonGroup
-          value={selectedPackage}
-          exclusive
-          onChange={handleChange}
-        >
+        <ToggleButtonGroup value={selectedPackage} exclusive onChange={handleChange}>
           {Object.keys(servicesData).map((key) => (
             <ToggleButton
               key={key}
@@ -172,6 +174,7 @@ const ServicesCar = () => {
             md: "repeat(3, 1fr)",
           },
           gap: 2,
+          mb: 4,
         }}
       >
         {services.map((service) => (
@@ -180,26 +183,27 @@ const ServicesCar = () => {
             sx={{
               borderRadius: "15px",
               boxShadow: 3,
-              padding: "15px",
-              maxWidth: isTablet ? "250px" : "100%",
-              margin: "auto",
+              padding: "10px",
               backgroundColor: "#2C2C2C",
               color: "#FFC300",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
             }}
           >
-            <CardContent sx={{ textAlign: "center" }}>
-              <Typography variant="h6" sx={{ fontWeight: "bold", color: "#FFC300" }}>
+            <CardContent sx={{ textAlign: "center", p: 0 }}>
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                 {service.title}
               </Typography>
-              <Typography variant="body2" sx={{ mb: 1, color: "#FFC300" }}>
+              <Typography variant="body2" sx={{ mb: 1 }}>
                 {service.subtitle}
               </Typography>
               <img
                 src={selectedCar.img || carImage}
                 alt={service.title}
-                style={{ width: "100%", borderRadius: "10px" }}
+                style={{ width: "100%", borderRadius: "10px", marginBottom: "8px" }}
               />
-              <Typography variant="h5" sx={{ fontWeight: "bold", mt: 1 }}>
+              <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                 {service.price}
               </Typography>
               <Typography
@@ -210,7 +214,7 @@ const ServicesCar = () => {
                   ? "Exterior Services"
                   : "Interior Services"}
               </Typography>
-              <ul style={{ textAlign: "left", paddingLeft: "20px" }}>
+              <ul style={{ textAlign: "left", paddingLeft: "20px", margin: 0 }}>
                 {service.features.map((feature, i) => (
                   <li key={i} style={{ marginBottom: "5px" }}>
                     {feature}
@@ -233,11 +237,12 @@ const ServicesCar = () => {
         <Box
           sx={{
             backgroundColor: "white",
-            padding: "20px",
+            padding: 3,
             borderRadius: "10px",
-            width: "300px",
-            margin: "auto",
-            mt: "100px",
+            width: "90%",
+            maxWidth: "320px",
+            mx: "auto",
+            my: "20vh",
             textAlign: "center",
           }}
         >
@@ -248,11 +253,17 @@ const ServicesCar = () => {
           <FormControl fullWidth sx={{ mb: 2 }}>
             <InputLabel>Year</InputLabel>
             <Select
-              value={selectedCar.year}
+              value={selectedCar.year || ""}
               onChange={(e) =>
-                setSelectedCar({ year: e.target.value, make: "", model: "" })
+                setSelectedCar((prev) => ({
+                  ...prev,
+                  year: e.target.value,
+                  make: "",
+                  model: "",
+                }))
               }
               label="Year"
+              defaultValue=""
             >
               <MenuItem value={2025}>2025</MenuItem>
               <MenuItem value={2024}>2024</MenuItem>
@@ -262,7 +273,7 @@ const ServicesCar = () => {
           <FormControl fullWidth sx={{ mb: 2 }} disabled={!selectedCar.year}>
             <InputLabel>Make</InputLabel>
             <Select
-              value={selectedCar.make}
+              value={selectedCar.make || ""}
               onChange={(e) =>
                 setSelectedCar((prev) => ({
                   ...prev,
@@ -271,6 +282,7 @@ const ServicesCar = () => {
                 }))
               }
               label="Make"
+              defaultValue=""
             >
               {makes.map((make) => (
                 <MenuItem key={make} value={make}>
@@ -283,7 +295,7 @@ const ServicesCar = () => {
           <FormControl fullWidth sx={{ mb: 2 }} disabled={!selectedCar.make}>
             <InputLabel>Model</InputLabel>
             <Select
-              value={selectedCar.model}
+              value={selectedCar.model || ""}
               onChange={(e) =>
                 setSelectedCar((prev) => ({
                   ...prev,
@@ -291,6 +303,7 @@ const ServicesCar = () => {
                 }))
               }
               label="Model"
+              defaultValue=""
             >
               {models.map((model) => (
                 <MenuItem key={model} value={model}>
@@ -303,10 +316,8 @@ const ServicesCar = () => {
           <Button
             variant="contained"
             onClick={handleConfirmCar}
+            disabled={!selectedCar.year || !selectedCar.make || !selectedCar.model}
             sx={{ mt: 2 }}
-            disabled={
-              !selectedCar.year || !selectedCar.make || !selectedCar.model
-            }
           >
             Confirm
           </Button>

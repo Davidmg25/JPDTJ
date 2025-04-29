@@ -5,29 +5,32 @@ const Banner = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // <600px
   const isTablet = useMediaQuery(theme.breakpoints.between("sm", "lg")); // 600px - 1200px
-  const isMidScreen = useMediaQuery("(max-width: 950px)"); // Específico para 921px
+  const isMidScreen = useMediaQuery("(max-width: 950px)");
 
   return (
     <Box
       sx={{
         display: "flex",
-        flexDirection: isMobile ? "column" : "row",
+        flexDirection: "row", // Siempre en fila (imagen izquierda, texto derecha)
+        flexWrap: "wrap", // Permite que se acomode en pantallas pequeñas sin invertir el orden
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "black",
-        padding: "5px 5px",
-        textAlign: isMobile ? "center" : "left",
+        padding: "20px",
         width: "100%",
       }}
     >
       {/* Imagen */}
       <Box
         sx={{
-          width: isMobile ? "100%" : isTablet ? "45%" : "80%",
-          height: isMobile ? "250px" : isTablet ? "450px" : "600px", // Ajuste altura
+          flex: isMobile ? "1 1 100%" : "1 1 60%",
+          height: isMobile ? 250 : isTablet ? 400 : 550,
           overflow: "hidden",
           display: "flex",
           justifyContent: "center",
+          alignItems: "center",
+          borderRadius: 2,
+          padding: isMobile ? 0 : 2,
         }}
       >
         <img
@@ -37,7 +40,7 @@ const Banner = () => {
             width: "100%",
             height: "100%",
             objectFit: "cover",
-            borderRadius: isMobile ? "0px" : "10px",
+            borderRadius: "12px",
           }}
         />
       </Box>
@@ -45,13 +48,14 @@ const Banner = () => {
       {/* Contenido */}
       <Box
         sx={{
-          width: isMobile ? "90%" : "50%",
-          maxWidth: isMidScreen ? "550px" : "600px", // Evita texto demasiado ancho
-          padding: isMobile ? "20px" : isMidScreen ? "0 50px" : isTablet ? "0 80px" : "0 120px",
+          flex: isMobile ? "1 1 100%" : "1 1 40%",
+          maxWidth: 600,
+          textAlign: isMobile ? "center" : "left",
+          padding: isMobile ? "20px 10px" : "0 40px",
         }}
       >
         <Typography
-          variant={isMobile ? "h3" : isMidScreen ? "h4" : "h2"}
+          variant={isMobile || isMidScreen ? "h4" : "h2"}
           sx={{ fontWeight: "bold", mb: 2, color: "white" }}
         >
           Welcome to <br /> J&P DETALLING
@@ -62,7 +66,7 @@ const Banner = () => {
           sx={{
             mb: 2,
             color: "white",
-            fontSize: isMobile ? "1.5rem" : isMidScreen ? "1.6rem" : isTablet ? "1.8rem" : "2.2rem",
+            fontSize: isMobile ? "1.2rem" : isTablet ? "1.5rem" : "1.8rem",
           }}
         >
           Get your ride shining like new! The best car detailing in town, just one click away.
@@ -71,9 +75,9 @@ const Banner = () => {
         <Typography
           variant="body2"
           sx={{
-            mb: 2,
+            mb: 3,
             color: "white",
-            fontSize: isMobile ? "1.2rem" : isMidScreen ? "1.3rem" : isTablet ? "1.5rem" : "2rem",
+            fontSize: isMobile ? "1rem" : isTablet ? "1.3rem" : "1.5rem",
           }}
         >
           Car detailing from the comfort of your home or office.
@@ -81,17 +85,15 @@ const Banner = () => {
 
         <Button
           variant="contained"
-          fullWidth
+          fullWidth={isMobile}
           sx={{
             backgroundColor: "#ffb300",
             color: "#000",
-            fontSize: "1rem",
             fontWeight: "bold",
             textTransform: "none",
             borderRadius: "30px",
             padding: "12px 24px",
-            maxWidth: isMobile ? "100%" : "100%",
-            transition: "all 0.3s ease-in-out",
+            fontSize: "1rem",
             boxShadow: "0px 5px 5px rgba(234, 199, 44, 0.5)",
             "&:hover": {
               backgroundColor: "#ffb300",
