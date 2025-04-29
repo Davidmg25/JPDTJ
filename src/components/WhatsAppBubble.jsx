@@ -4,7 +4,7 @@ import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 const WhatsAppBubble = () => {
   return (
     <a
-      href="https://wa.me/17865990988?text=Hola%2C%20quiero%20más%20información"
+      href="https://wa.me/17865990988?text=Hello%2C%20I%20want%20more%20information"
       target="_blank"
       rel="noopener noreferrer"
       style={{
