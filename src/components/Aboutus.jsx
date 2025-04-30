@@ -5,13 +5,12 @@ import {
   Container,
   Grid,
   Link,
-  Button
 } from '@mui/material';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import Cardt from '../img/cardetalling.jpg';
-
+import Cardt from '../img/cardetalling.avif';
+import josedt from '../img/jpdetalling.avif';
 const AboutUs = () => {
   return (
     <Box sx={{ backgroundColor: 'black', color: 'white' }}>
@@ -26,6 +25,14 @@ const AboutUs = () => {
           <Typography variant="h6" sx={{ maxWidth: 800, mx: 'auto', color: '#ccc', mb: 4 }}>
             Unleashing the true beauty of every vehicle. At J&P Detailing, we blend passion, precision, and an obsession with perfection to transform your car into an automotive masterpiece.
           </Typography>
+          <Grid item xs={12} md={6}>
+              <Box
+                component="img"
+                src={josedt}
+                alt="JP Detailing jose"
+                sx={{ width: '80%', borderRadius: 2, boxShadow: 3 }}
+              />
+            </Grid>
         </Container>
       </Box>
 
