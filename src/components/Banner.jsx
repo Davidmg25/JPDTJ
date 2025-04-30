@@ -1,11 +1,26 @@
-import { Box, Button, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Button, Typography, useMediaQuery, useTheme, Modal } from "@mui/material";
+import { useState } from "react";
 import photo1 from "../img/porshe1.jpg";
+import ServicesCar from "./ServicesCar"; // Componente de selección de servicios
 
 const Banner = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // <600px
   const isTablet = useMediaQuery(theme.breakpoints.between("sm", "lg")); // 600px - 1200px
   const isMidScreen = useMediaQuery("(max-width: 950px)");
+
+  // Estado para mostrar el modal de reserva
+  const [openModal, setOpenModal] = useState(false);
+
+  // Función para abrir el modal de reserva
+  const handleBookingClick = () => {
+    setOpenModal(true); // Muestra el modal con el formulario de selección de servicios
+  };
+
+  // Función para cerrar el modal
+  const handleCloseModal = () => {
+    setOpenModal(false); // Cierra el modal
+  };
 
   return (
     <Box
@@ -101,10 +116,43 @@ const Banner = () => {
               boxShadow: "0px 8px 8px rgba(255, 202, 9, 0.7)",
             },
           }}
+          onClick={handleBookingClick} // Al hacer clic, se abre el modal de booking
         >
-          Search services
+          Book a Service
         </Button>
       </Box>
+
+      {/* Modal para booking */}
+      <Modal open={openModal} onClose={handleCloseModal}>
+        <Box
+          sx={{
+            mt: "80px",
+            mx: "auto",
+            width: "100%",
+            maxWidth: "1000px",
+            height: "calc(100vh - 80px)",
+            overflowY: "auto",
+            color: "white",
+            bgcolor: "black",
+            p: 2,
+            position: "relative",
+          }}
+        >
+          {/* Cabecera del modal */}
+          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
+            <Typography variant="h6">Booking Now</Typography>
+            <Button
+              onClick={handleCloseModal}
+              sx={{ color: "#ffb300" }}
+            >
+              Close
+            </Button>
+          </Box>
+
+          {/* Contenido del modal con el formulario de selección de servicios */}
+          <ServicesCar onClose={handleCloseModal} />
+        </Box>
+      </Modal>
     </Box>
   );
 };

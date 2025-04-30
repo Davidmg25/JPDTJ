@@ -126,11 +126,11 @@ const ServicesCar = () => {
         py: 4,
       }}
     >
-      <Typography variant="h4" sx={{ fontWeight: "bold", mb: 2 ,color:"FFC300"  }}>
+      <Typography variant="h4" sx={{ fontWeight: "bold", mb: 2 , color: '#ffb300'}}>
         Select A Car Detailing Package
       </Typography>
 
-      <Typography variant="body1"  sx={{ mb: 3, color:"FFC300" }}>
+      <Typography variant="body1"  sx={{ mb: 3,  color: '#ffb300' }}>
         Choose from one of our packages to begin your ultimate car detailing experience.
       </Typography>
 
@@ -185,17 +185,17 @@ const ServicesCar = () => {
               boxShadow: 3,
               padding: "10px",
               backgroundColor: "#2C2C2C",
-              color: "#FFC300",
+              color: "#FFFFFF",
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
             }}
           >
             <CardContent sx={{ textAlign: "center", p: 0 }}>
-              <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+              <Typography variant="h6" sx={{ fontWeight: "bold" ,color: "#FFC300", }}>
                 {service.title}
               </Typography>
-              <Typography variant="body2" sx={{ mb: 1 }}>
+              <Typography variant="body2" sx={{ mb: 1,color: "#FFC300", }}>
                 {service.subtitle}
               </Typography>
               <img

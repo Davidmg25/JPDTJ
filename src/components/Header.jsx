@@ -17,6 +17,8 @@ import logo from "../img/logo.PNG";
 import { Link, useLocation } from "react-router-dom";
 import { amber } from "@mui/material/colors";
 import ServicesCar from "./ServicesCar";
+import AboutUs from '../components/Aboutus';
+import OurJobs from "../components/OurJobs";
 
 const Header = () => {
   const [mobile, setMobile] = useState(false);
@@ -84,9 +86,20 @@ const Header = () => {
 >
   Home
 </MenuItem>
-
-            <MenuItem onClick={handleClose}>Works</MenuItem>
-            <MenuItem onClick={handleClose}>About us</MenuItem>
+            <MenuItem
+  component={Link}
+  to="/OurJobs"
+  onClick={handleClose}
+>
+Our Jobs
+</MenuItem>
+            <MenuItem
+  component={Link}
+  to="/Aboutus"
+  onClick={handleClose}
+>
+  About Us
+</MenuItem>
           </Menu>
         </>
       )}
@@ -127,8 +140,19 @@ const Header = () => {
             >Home
             </Button>
 
-            <Button sx={{ color: "#ffb300" }}>Works</Button>
-            <Button sx={{ color: "#ffb300" }}>About us</Button>
+            <Link to="/OurJobs" style={{ textDecoration: "none" }}>
+        <Button sx={{ color: "#ffb300" }}>
+          Our Jobs
+        </Button>
+      </Link>
+            <Button
+            sx={{ color: "#ffb300" }}
+            component={Link}
+            to="/Aboutus"
+>
+  About us
+</Button>
+
           </>
         )}
       </div>

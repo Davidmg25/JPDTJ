@@ -1,6 +1,7 @@
 import React from "react";
-import { Box, Grid, Typography, Link, IconButton } from "@mui/material";
+import { Box, Grid, Typography, Link as MuiLink, IconButton } from "@mui/material";
 import { Facebook, Instagram, WhatsApp } from "@mui/icons-material";
+import { Link as RouterLink } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -31,15 +32,17 @@ const Footer = () => {
             Quick Links
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-            <Link href="#services" underline="none" color="inherit" sx={{ opacity: 0.8, "&:hover": { color: "#FFC300" } }}>
-              Services
-            </Link>
-            <Link href="#about" underline="none" color="inherit" sx={{ opacity: 0.8, "&:hover": { color: "#FFC300" } }}>
+            <MuiLink href="#services" underline="none" color="inherit" sx={{ opacity: 0.8, "&:hover": { color: "#FFC300" } }}>
+             Ours Jobs
+            </MuiLink>
+            <RouterLink
+              to="/aboutus"
+              style={{ textDecoration: "none", color: "inherit", opacity: 0.8 }}
+              onMouseEnter={(e) => (e.target.style.color = "#FFC300")}
+              onMouseLeave={(e) => (e.target.style.color = "inherit")}
+            >
               About Us
-            </Link>
-            <Link href="#contact" underline="none" color="inherit" sx={{ opacity: 0.8, "&:hover": { color: "#FFC300" } }}>
-              Contact
-            </Link>
+            </RouterLink>
           </Box>
         </Grid>
 
@@ -52,7 +55,7 @@ const Footer = () => {
             <IconButton href="https://facebook.com" target="_blank" sx={{ color: "#FFC300" }}>
               <Facebook />
             </IconButton>
-            <IconButton href="https://instagram.com" target="_blank" sx={{ color: "#FFC300" }}>
+            <IconButton href="https://www.instagram.com/jp_detailing05?igsh=MW42a3ZxejBiYTc2dw%3D%3D&utm_source=qr" target="_blank" sx={{ color: "#FFC300" }}>
               <Instagram />
             </IconButton>
             <IconButton href="https://wa.me/1234567890" target="_blank" sx={{ color: "#25D366" }}>

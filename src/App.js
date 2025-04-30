@@ -7,6 +7,8 @@ import WhatsAppBubble from './components/WhatsAppBubble';
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import { ServiceProvider } from './context/ServiceContext';
 import './server/database';
+import AboutUs from './components/Aboutus';
+import OurJobs from './components/OurJobs';
 
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import theme from './theme';
@@ -31,6 +33,8 @@ function AppWrapper() {
         <Route path="/" element={<Home />} />
         <Route path="/services" element={<ServicesCar />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/OurJobs" element={<OurJobs />} />
+        <Route path="/Aboutus" element={<AboutUs />} />
       </Routes>
       <WhatsAppBubble />
     </>
