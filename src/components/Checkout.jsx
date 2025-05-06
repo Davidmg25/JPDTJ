@@ -13,9 +13,12 @@ import {
   TextField,
   Grid,
 } from "@mui/material";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { useState } from "react";
 import { AVAILABLE_COLORS } from "../img/colors";
 import { addOns } from "../components/Adds";
+import PhoneInput from 'react-phone-number-input';  
+import 'react-phone-number-input/style.css';
 
 const steps = [
   "Select Package",
@@ -54,7 +57,9 @@ const Checkout = () => {
   const [step, setStep] = useState(0);
 
   const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
+  const [countryCode, setCountryCode] = useState("");  
+  const [phoneNumber, setPhoneNumber] = useState("");  
+  const [phoneError, setPhoneError] = useState(false);
   const [email, setEmail] = useState("");
   const [selectedAddOns, setSelectedAddOns] = useState([]);
 
@@ -67,11 +72,12 @@ const Checkout = () => {
       localStorage.setItem("carInfo", JSON.stringify({ ...selectedCar, carType, selectedColor }));
     }
     if (step === 2) {
-      if (!name || !phone || !email) {
+      if (!name || !countryCode || !phoneNumber || !email) {
         alert("Please complete contact info.");
         return;
       }
-      localStorage.setItem("userContact", JSON.stringify({ name, phone, email }));
+      const fullPhone = `+${countryCode}${phoneNumber}`;
+      localStorage.setItem("userContact", JSON.stringify({ name, phone: fullPhone, email }));
     }
     if (step < steps.length - 1) setStep((prev) => prev + 1);
   };
@@ -99,23 +105,24 @@ const Checkout = () => {
   };
 
   const generateWhatsappMessage = () => {
+    const fullPhone = `+${countryCode}${phoneNumber}`;
     const totalPrice = getAdjustedPrice().toFixed(2);
     return `
-  *New Detailing Service Order*
-  
-  *Package:* ${selectedPackage?.title}
-  *Description:* ${selectedPackage?.subtitle}
-  *Base Price:* ${selectedPackage?.price}
-  *Adjusted Price:* $${getBodyAdjustedPrice().toFixed(2)}
-  *Vehicle:* ${selectedCar.make} ${selectedCar.model} (${selectedCar.year})
-  *Body Type:* ${carType}
-  *Color:* ${selectedColor}
-  *Add-ons:* ${selectedAddOns.length > 0 ? selectedAddOns.join(", ") : "None"}
-  *Customer Name:* ${name}
-  *Phone:* ${phone}
-  *Email:* ${email}
-  *Total Price:* $${totalPrice}
-  `.trim();
+*New Detailing Service Order*
+
+*Package:* ${selectedPackage?.title}
+*Description:* ${selectedPackage?.subtitle}
+*Base Price:* ${selectedPackage?.price}
+*Adjusted Price:* $${getBodyAdjustedPrice().toFixed(2)}
+*Vehicle:* ${selectedCar.make} ${selectedCar.model} (${selectedCar.year})
+*Body Type:* ${carType}
+*Color:* ${selectedColor}
+*Add-ons:* ${selectedAddOns.length > 0 ? selectedAddOns.join(", ") : "None"}
+*Customer Name:* ${name}
+*Phone:* ${fullPhone}
+*Email:* ${email}
+*Total Price:* $${totalPrice}
+    `.trim();
   };
 
   const isLastStep = step === steps.length - 1;
@@ -141,7 +148,7 @@ const Checkout = () => {
               {selectedCar.model || "Model not selected"} - {selectedCar.year || "Year not selected"}
             </Typography>
           </CardContent>
-          <Box sx={{ width: "100%", maxWidth: 150 }}>
+          <Box sx={{ width: "100%", maxWidth: 400 }}>
             <img
               src={selectedCar.img || "https://via.placeholder.com/150"}
               alt="Selected Car"
@@ -150,7 +157,7 @@ const Checkout = () => {
           </Box>
         </Card>
 
-        {/* Step 0: Package selection */}
+        {/* step 0: select package */}
         {step === 0 && (
           <Card sx={{ padding: "15px", mb: 2, backgroundColor: "grey" }}>
             <Typography variant="h6" fontWeight="bold" mb={1} sx={{ color: "#FFC300" }}>
@@ -199,7 +206,7 @@ const Checkout = () => {
           </Card>
         )}
 
-        {/* Step 1: Car type and color */}
+        {/* step 1: select car type & color */}
         {step === 1 && (
           <>
             <Typography variant="h6" fontWeight="bold" sx={{ mb: 1 }}>
@@ -211,8 +218,8 @@ const Checkout = () => {
               fullWidth
               displayEmpty
               sx={selectStyles}
-              renderValue={(selected) =>
-                selected ? selected : <span style={{ color: "#FFC300 !important" }}>Select car type</span>
+              renderValue={(sel) =>
+                sel ? sel : <span style={{ color: "#FFC300" }}>Select car type</span>
               }
             >
               <MenuItem value="">
@@ -230,7 +237,7 @@ const Checkout = () => {
               onChange={(e) => setSelectedColor(e.target.value)}
               fullWidth
               sx={selectStyles}
-              renderValue={(selected) => (selected ? selected : <span style={{ color: "#888" }}>Select a color</span>)}
+              renderValue={(sel) => (sel ? sel : <span style={{ color: "#888" }}>Select a color</span>)}
             >
               {AVAILABLE_COLORS.map((color, idx) => (
                 <MenuItem key={idx} value={color}>
@@ -241,49 +248,79 @@ const Checkout = () => {
           </>
         )}
 
-        {/* Step 2: Contact Info */}
+        {/* step 2: contact info */}
         {step === 2 && (
-          <>
-            <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>
-              Contact Information
-            </Typography>
-            <TextField
-              fullWidth
-              label="Full Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              sx={{ mb: 2 }}
-              error={!name}
-              helperText={!name ? "Name is required" : ""}
-            />
-            <TextField
-              fullWidth
-              label="Phone Number"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              sx={{ mb: 2 }}
-              error={!/^\+?\d{7,15}$/.test(phone)}
-              helperText={
-                (!phone && "Phone number is required") ||
-                (!/^\+?\d{7,15}$/.test(phone) && "Enter a valid phone number")
-              }
-            />
-            <TextField
-              fullWidth
-              label="Email Address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              sx={{ mb: 2 }}
-              error={!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(email)}
-              helperText={
-                (!email && "Email is required") ||
-                (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(email) && "Enter a valid email address")
-              }
-            />
-          </>
-        )}
+  <>
+    <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>
+      Contact Information
+    </Typography>
 
-        {/* Step 3: Add-ons */}
+    {/* Full Name */}
+    <TextField
+      fullWidth
+      required
+      label="Full Name"
+      value={name}
+      onChange={(e) => setName(e.target.value)}
+      sx={{ mb: 2 }}
+      error={!name}
+      helperText={!name ? "Name is required" : ""}
+    />
+
+    {/* Phone Number */}
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 1, mb: 2 }}>
+      <label style={{ fontSize: "1rem", }}>
+        Phone Number<span style={{ color: "red" }}>*</span>
+      </label>
+      <PhoneInput
+        international
+        defaultCountry="US"
+        value={phoneNumber}
+        onChange={(value) => {
+          setPhoneNumber(value);
+          const match = value ? value.match(/^\+(\d+)/) : null;
+          if (match) setCountryCode(match[1]);
+          setPhoneError(!value); // marcar error si vacío
+        }}
+        style={{
+          width: "100%",
+          border: phoneError ? "1px solid red" : "1px solid rgba(0, 0, 0, 0.23)",
+          borderRadius: "4px",
+          padding: "10px"
+        }}
+      />
+      {phoneError && (
+        <span style={{ color: "red", fontSize: "0.75rem" }}>
+          Phone number is required
+        </span>
+      )}
+    </Box>
+
+    {/* Email Address */}
+    <TextField
+      fullWidth
+      required
+      label="Email Address"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      sx={{ mb: 2 }}
+      error={
+        !email ||
+        !/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(email)
+      }
+      helperText={
+        !email
+          ? "Email is required"
+          : !/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(email)
+          ? "Enter a valid email address"
+          : ""
+      }
+    />
+  </>
+)}
+
+
+        {/* step 3: add-ons */}
         {step === 3 && (
           <>
             <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>
@@ -302,7 +339,7 @@ const Checkout = () => {
                         <Card
                           onClick={() => {
                             setSelectedAddOns((prev) =>
-                              isSelected ? prev.filter((name) => name !== item.name) : [...prev, item.name]
+                              isSelected ? prev.filter((n) => n !== item.name) : [...prev, item.name]
                             );
                           }}
                           sx={{
@@ -324,7 +361,7 @@ const Checkout = () => {
           </>
         )}
 
-        {/* Step 4: Confirmation */}
+        {/* step 4: review & confirm */}
         {step === 4 && (
           <Card sx={{ padding: "20px", mb: 2 }}>
             <Typography variant="h6" fontWeight="bold" mb={2}>
@@ -334,7 +371,7 @@ const Checkout = () => {
               <Typography variant="subtitle1" fontWeight="bold">Package:</Typography>
               <Typography>{selectedPackage?.title} - {selectedPackage?.subtitle}</Typography>
               <Typography>Base Price: {selectedPackage?.price}</Typography>
-              <Typography>Price with body type adjustment: ${getBodyAdjustedPrice().toFixed(2)}</Typography>
+              <Typography>With Body Adj.: ${getBodyAdjustedPrice().toFixed(2)}</Typography>
             </Box>
             <Box sx={{ mb: 2 }}>
               <Typography variant="subtitle1" fontWeight="bold">Car Details:</Typography>
@@ -345,57 +382,67 @@ const Checkout = () => {
               <Typography>Color: {selectedColor}</Typography>
             </Box>
             <Box sx={{ mb: 2 }}>
-              <Typography variant="subtitle1" fontWeight="bold">Selected Add-ons:</Typography>
-              {selectedAddOns.length === 0 ? (
-                <Typography>No add-ons selected.</Typography>
-              ) : (
-                <ul>
-                  {selectedAddOns.map((name, idx) => {
-                    const addon = Object.values(addOns).flat().find((a) => a.name === name);
-                    return <li key={idx}>{addon?.name} — {addon?.price}</li>;
-                  })}
-                </ul>
-              )}
-            </Box>
-            <Box sx={{ mb: 2 }}>
-              <Typography variant="subtitle1" fontWeight="bold">Contact Info:</Typography>
+              <Typography variant="subtitle1" fontWeight="bold">Contact:</Typography>
               <Typography>Name: {name}</Typography>
-              <Typography>Phone: {phone}</Typography>
+              <Typography>Phone: +{countryCode}{phoneNumber}</Typography>
               <Typography>Email: {email}</Typography>
             </Box>
-            <Box sx={{ mt: 3 }}>
-              <Typography variant="h6" fontWeight="bold">
-                Total Price: ${getAdjustedPrice().toFixed(2)}
-              </Typography>
+            <Box sx={{ mb: 2 }}>
+              <Typography variant="subtitle1" fontWeight="bold">Add-ons:</Typography>
+              {selectedAddOns.length > 0 ? (
+                <ul>{selectedAddOns.map((n,i) => <li key={i}>{n}</li>)}</ul>
+              ) : (
+                <Typography>No add-ons selected</Typography>
+              )}
             </Box>
+            <Typography variant="h5" fontWeight="bold" color="primary">
+              Total: ${getAdjustedPrice().toFixed(2)}
+            </Typography>
           </Card>
         )}
 
-        {/* Botón siguiente o enviar */}
-        <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 4 }}>
+        {/* navigation buttons */}
+        <Box sx={{ display: "flex", justifyContent: "space-between", mt: 4 }}>
           <Button
-            variant="contained"
-            sx={{ backgroundColor: "#FF333", color: "white", fontWeight: "bold" }}
-            onClick={() => {
-              if (isLastStep) {
-                const whatsappUrl = `https://wa.me/17865990988?text=${encodeURIComponent(generateWhatsappMessage())}`;
-                window.location.href = whatsappUrl;
-              } else {
-                handleNext();
-              }
+            variant="outlined"
+            disabled={step === 0}
+            onClick={() => setStep((prev) => prev - 1)}
+            sx={{
+              fontWeight: "bold",
+              color: "#FFC300",
+              borderColor: "#FFC300",
+              '&:hover': { backgroundColor: "#FFC300", color: "white" },
+              '&:disabled': { borderColor: "#ccc", color: "#ccc" }
             }}
+          >
+            Back
+          </Button>
+          <Button
+            startIcon={<WhatsAppIcon />}
+            variant="contained"
+            sx={{
+              backgroundColor: "#FFC300",
+              color: "black",
+              fontWeight: "bold",
+              px: 3, py: 2, fontSize: "1rem", borderRadius: 3,
+              '&:hover': { backgroundColor: "#FFB800" },
+              '&:active': { backgroundColor: "#FFA500" }
+            }}
+            onClick={isLastStep ? () => {
+              const url = `https://wa.me/17865990988?text=${encodeURIComponent(generateWhatsappMessage())}`;
+              window.open(url, "_blank");
+            } : handleNext}
           >
             {isLastStep ? "Finish & Send to WhatsApp" : "Next"}
           </Button>
         </Box>
       </Grid>
 
-      {/* Stepper vertical en la derecha */}
       <Grid item xs={12} md={4}>
         <Stepper activeStep={step} orientation="vertical">
-          {steps.map((stepLabel, index) => (
-            <Step key={index}>
-              <StepLabel>{stepLabel}</StepLabel>
+          {steps.map((label, idx) => (
+            <Step key={idx}>
+              <StepLabel>{label}</StepLabel>
             </Step>
           ))}
         </Stepper>
