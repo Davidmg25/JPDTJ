@@ -21,15 +21,27 @@ const servicesData = {
   fullDetail: [
     {
       id: 1,
-      title: "BASIC WASH",
-      subtitle: "Maintenance",
+      title: "BASIC REFRESH",
+      subtitle: "Start Fresh, Feel Sharp",
       price: "Starting at $60.00",
       features: [
-        "Exterior foam bath & hand wash",
-        "Tire shine & spray wax",
-        "Interior vacuum & wipedown",
-        "Clean windows & doorjambs",
-        "Trunk vacuum (if empty)",
+        "✨ EXTERIOR PROCESS",
+        "🪟 Clean windows",
+        "🚪 Doorjambs cleaned",
+        "🧼 Foam bath",
+        "🖐️ Hand wash",
+        "🛞 Tire shine",
+        "💦 Spray wax application",
+        "🧽 INTERIOR PROCESS",
+        "🧴 Basic interior wipedown",
+        "🧹 Vacuum interior",
+        "🌸 Air freshener",
+        "🧳 Trunk vacuum (if empty)",
+        "⚠️ FINAL PRICE UPON PHYSICAL INSPECTION",
+        "➕ Additional charges may include:",
+        "🐾 Heavy pet hair",
+        "🏖️ Heavy dirt/sand",
+        "☣️ Biohazards",
       ],
     },
     {
@@ -38,11 +50,23 @@ const servicesData = {
       subtitle: "Quick Full Detail",
       price: "Starting at $109.00",
       features: [
-        "Exterior wax & rim cleaning",
-        "Interior & trunk vacuum",
-        "Leather cleaning & conditioning",
-        "Light stain removal",
-        "Window & doorjamb cleaning",
+        "✨ EXTERIOR PROCESS",
+        "🧼 Full exterior foam hand wash",
+        "🛞 Tire dressing & rim cleaning",
+        "🪟 Exterior window cleaning",
+        "💎 Complete wax for protection & shine",
+        "🧽 INTERIOR PROCESS",
+        "🧹 Thorough interior & trunk vacuum",
+        "🧴 Interior wipe down",
+        "🚪 Door jambs cleaned",
+        "🪟 Window cleaning inside",
+        "🛋️ Leather cleaning & conditioning",
+        "🧼 Light stain removal",
+        "⚠️ FINAL PRICE UPON PHYSICAL INSPECTION",
+        "➕ Additional charges may include:",
+        "🐾 Heavy pet hair",
+        "🏖️ Heavy dirt/sand",
+        "☣️ Biohazards",
       ],
     },
     {
@@ -51,11 +75,27 @@ const servicesData = {
       subtitle: "Premium Full Detail",
       price: "Starting at $165.00",
       features: [
-        "Clay bar & paint decontamination",
-        "3-5 month paint protection",
-        "Full wheel cleaning & tire dressing",
-        "Detailed vacuum & wipe down",
-        "Leather cleaning",
+        "✨ EXTERIOR PROCESS",
+        "🚿 Pre-rinse, signature foam bath & full hand wash",
+        "🐛 Detailed bug removal, light tar removal",
+        "🧼 Paint decontamination & clay bar (smooth paint)",
+        "🛡️ 3–5 month paint protection",
+        "🛞 Full wheel cleaning",
+        "🧴 Dress tires & fenders",
+        "🚪 Door & trunk jambs cleaned and protected",
+        "🪟 Window cleaning",
+        "🧽 INTERIOR PROCESS",
+        "🧹 Deep vacuum (trunk included)",
+        "🥤 Cup holder cleaning",
+        "🧴 Full interior wipe down",
+        "🌀 Brush vents & gauges",
+        "🪟 Window cleaning (interior)",
+        "🛋️ Leather cleaning",
+        "⚠️ FINAL PRICE UPON PHYSICAL INSPECTION",
+        "➕ Additional charges may include:",
+        "🐾 Heavy pet hair",
+        "🏖️ Heavy dirt/sand",
+        "☣️ Biohazards",
       ],
     },
   ],
@@ -66,11 +106,25 @@ const servicesData = {
       subtitle: "Showroom Ready",
       price: "Starting at $255.00",
       features: [
-        "Clay bar & machine-applied wax",
-        "High gloss polish (6–9 month protection)",
-        "Steam clean interior corner to corner",
-        "Shampoo seats & carpets / leather conditioning",
-        "Silk dress plastics, full vacuum, air freshener",
+        "✨ EXTERIOR PROCESS",
+        "🧼 Clay bar treatment",
+        "✨ High-gloss glaze polisher application",
+        "🌀 Machine-applied wax (6–9 month paint protection)",
+        "🪟 Clean windows",
+        "🚪 Door jambs cleaned",
+        "🫧 Foam bath",
+        "🖐️ Hand wash",
+        "🛞 Tire shine",
+        "🧽 INTERIOR PROCESS",
+        "🧴 Full interior deep clean with premium products",
+        "🌬️ Steam cleaning (corner to corner)",
+        "🧼 Shampoo seats w/ extractor or 🛋️ Leather cleaning & conditioning",
+        "🧽 Shampoo carpets",
+        "🎀 Silk dress plastics & full wipedown",
+        "🧹 Vacuum interior",
+        "🌸 Air freshener",
+        "🏁 PERFECT PACKAGE TO MAKE YOUR CAR LOOK SHOWROOM NEW",
+        "⚠️ *Some stains/scratches/defects may not be removable",
       ],
     },
   ],
@@ -250,25 +304,31 @@ const ServicesCar = () => {
             Select Your Car
           </Typography>
 
-          <FormControl fullWidth sx={{ mb: 2 }}>
-            <InputLabel>Year</InputLabel>
-            <Select
-              value={selectedCar.year || ""}
-              onChange={(e) =>
-                setSelectedCar((prev) => ({
-                  ...prev,
-                  year: e.target.value,
-                  make: "",
-                  model: "",
-                }))
-              }
-              label="Year"
-              defaultValue=""
-            >
-              <MenuItem value={2025}>2025</MenuItem>
-              <MenuItem value={2024}>2024</MenuItem>
-            </Select>
-          </FormControl>
+        <FormControl fullWidth sx={{ mb: 2 }}>
+  <InputLabel>Year</InputLabel>
+  <Select
+    value={selectedCar.year || ""}
+    onChange={(e) =>
+      setSelectedCar((prev) => ({
+        ...prev,
+        year: e.target.value,
+        make: "",
+        model: "",
+      }))
+    }
+    label="Year"
+  >
+    {Array.from({ length: 2025 - 1990 + 1 }, (_, i) => {
+      const year = 2025 - i;
+      return (
+        <MenuItem key={year} value={year}>
+          {year}
+        </MenuItem>
+      );
+    })}
+  </Select>
+</FormControl>
+
 
           <FormControl fullWidth sx={{ mb: 2 }} disabled={!selectedCar.year}>
             <InputLabel>Make</InputLabel>

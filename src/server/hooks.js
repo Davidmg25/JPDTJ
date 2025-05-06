@@ -6,41 +6,42 @@ const useFirestoreCars = (selectedCar, setSelectedCar) => {
   const [makes, setMakes] = useState([]);
   const [models, setModels] = useState([]);
 
-  const fetchedMakes = useRef({});
+  const fetchedMakes = useRef(false);
   const fetchedModels = useRef({});
   const fetchedModelDetails = useRef({});
 
+  const FIRESTORE_YEAR = "2025"; // 🔥 Este es el año fijo de tu base de datos
   const { year, make, model } = selectedCar;
 
-  // Obtener marcas
+  // Obtener todas las marcas desde Cars/2025/Makes
   useEffect(() => {
     const fetchMakes = async () => {
-      if (!year || fetchedMakes.current[year]) return;
+      if (fetchedMakes.current) return;
 
       try {
-        const makesCollection = collection(db, `Cars/${year}/Makes`);
+        const makesCollection = collection(db, `Cars/${FIRESTORE_YEAR}/Makes`);
         const snapshot = await getDocs(makesCollection);
         const makesList = snapshot.docs.map((doc) => doc.id);
         setMakes(makesList);
-        fetchedMakes.current[year] = makesList;
+        fetchedMakes.current = true;
       } catch (error) {
         console.error("Error fetching makes:", error);
       }
     };
 
     fetchMakes();
-  }, [year]);
+  }, []);
 
-  // Obtener modelos
+  // Obtener modelos desde Cars/2025/Makes/{make}/Model
   useEffect(() => {
-    const fetchModels = async () => {
-      const key = `${year}_${make}`;
-      if (!year || !make || fetchedModels.current[key]) return;
+    const key = `${make}`;
+    if (!make || fetchedModels.current[key]) return;
 
+    const fetchModels = async () => {
       try {
         const modelsCollection = collection(
           db,
-          `Cars/${year}/Makes/${make}/Model`
+          `Cars/${FIRESTORE_YEAR}/Makes/${make}/Model`
         );
         const snapshot = await getDocs(modelsCollection);
         const modelsList = snapshot.docs.map((doc) => doc.id);
@@ -52,18 +53,18 @@ const useFirestoreCars = (selectedCar, setSelectedCar) => {
     };
 
     fetchModels();
-  }, [year, make]);
+  }, [make]);
 
-  // Obtener detalles del modelo
+  // Obtener detalles del modelo desde Cars/2025/Makes/{make}/Model/{modelo}
   useEffect(() => {
-    const fetchModelDetails = async () => {
-      const key = `${year}_${make}_${model}`;
-      if (!year || !make || !model || fetchedModelDetails.current[key]) return;
+    const key = `${make}_${model}`;
+    if (!make || !model || fetchedModelDetails.current[key]) return;
 
+    const fetchModelDetails = async () => {
       try {
         const modelDocRef = doc(
           db,
-          `Cars/${year}/Makes/${make}/Model/${model}`
+          `Cars/${FIRESTORE_YEAR}/Makes/${make}/Model/${model}`
         );
         const modelSnap = await getDoc(modelDocRef);
         if (modelSnap.exists()) {
@@ -82,19 +83,7 @@ const useFirestoreCars = (selectedCar, setSelectedCar) => {
     };
 
     fetchModelDetails();
-  }, [year, make, model, setSelectedCar]);
-
-  // Mostrar datos desde caché si existen
-  useEffect(() => {
-    if (year && fetchedMakes.current[year]) {
-      setMakes(fetchedMakes.current[year]);
-    }
-
-    const modelKey = `${year}_${make}`;
-    if (fetchedModels.current[modelKey]) {
-      setModels(fetchedModels.current[modelKey]);
-    }
-  }, [year, make]);
+  }, [make, model, setSelectedCar]);
 
   return { makes, models };
 };
