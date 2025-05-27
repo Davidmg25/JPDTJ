@@ -14,11 +14,12 @@ import {
   Grid,
 } from "@mui/material";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import { useState } from "react";
+import { useState ,useEffect } from "react";
 import { AVAILABLE_COLORS } from "../img/colors";
 import { addOns } from "../components/Adds";
 import PhoneInput from 'react-phone-number-input';  
 import 'react-phone-number-input/style.css';
+
 
 const steps = [
   "Select Package",
@@ -48,13 +49,17 @@ const selectStyles = {
 };
 
 const Checkout = () => {
-  const location = useLocation();
+    const location = useLocation();
   const allPackages = location.state?.allPackages || {};
   const [selectedPackage, setSelectedPackage] = useState(location.state?.package || {});
   const [selectedCar] = useState(location.state?.car || {});
   const [carType, setCarType] = useState(location.state?.car?.body || "");
   const [selectedColor, setSelectedColor] = useState("");
   const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const [name, setName] = useState("");
   const [countryCode, setCountryCode] = useState("");  
