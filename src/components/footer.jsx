@@ -32,9 +32,14 @@ const Footer = () => {
             Quick Links
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-            <MuiLink href="#services" underline="none" color="inherit" sx={{ opacity: 0.8, "&:hover": { color: "#FFC300" } }}>
+            <RouterLink
+               to="/Ourjobs"
+              style={{ textDecoration: "none", color: "inherit", opacity: 0.8 }}
+              onMouseEnter={(e) => (e.target.style.color = "#FFC300")}
+              onMouseLeave={(e) => (e.target.style.color = "inherit")}
+              >
              Ours Jobs
-            </MuiLink>
+            </RouterLink>
             <RouterLink
               to="/aboutus"
               style={{ textDecoration: "none", color: "inherit", opacity: 0.8 }}
