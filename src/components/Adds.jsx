@@ -16,7 +16,7 @@ const addOns = {
   comfort: [
     { name: "Leather Conditioning", price: "$24.99" },
     { name: "Pet Hair Removal", price: "$39.99" },
-    { name: "Shampoo Carpets", price: "$9.99" },
+    { name: "Shampoo Carpets", price: "$59.99" },
     { name: "Shampoo Seats", price: "$79.99" },
     { name: "/Steam Headliner(roof)", price: "$39.99" },
   ],
