@@ -68,7 +68,7 @@ const Footer = () => {
       {/* Bottom Line */}
       <Box mt={5} borderTop="1px solid #444" pt={3} textAlign="center">
         <Typography variant="body2" sx={{ opacity: 0.6 }}>
-          © {new Date().getFullYear()} JP Detailing. All rights reserved.
+          © {new Date().getFullYear()} J&P Detailing. All rights reserved.
         </Typography>
       </Box>
     </Box>
