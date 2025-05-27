@@ -1901,6 +1901,16 @@
   resolved "https://registry.npmjs.org/@firebase/webchannel-wrapper/-/webchannel-wrapper-1.0.3.tgz"
   integrity sha512-2xCRM9q9FlzGZCdgDMJwc0gyUkWFtkosy7Xxr6sFgQwn+wMNIWd7xIvYNauU1r64B5L5rsGKy/n9TKJ0aAFeqQ==
 
+"@fontsource/rajdhani@^5.2.5":
+  version "5.2.5"
+  resolved "https://registry.npmjs.org/@fontsource/rajdhani/-/rajdhani-5.2.5.tgz"
+  integrity sha512-0PNeyzq6ZpIKWeylY+eGbKPB/Ep0RgModGIzpPbfMOSPXJ+8AmPr0oRCR7tfjpfqfp3pO5KxbzjSNn8J+Mh4kA==
+
+"@fontsource/russo-one@^5.2.5":
+  version "5.2.5"
+  resolved "https://registry.npmjs.org/@fontsource/russo-one/-/russo-one-5.2.5.tgz"
+  integrity sha512-udb/wR5vVjr74R1KXittms+sgNHTpu8odLFEHYV1VA1Vi913N52JIAOOWOrghu9ydUIu9vXXFdGKHTTLj8NWWg==
+
 "@googlemaps/js-api-loader@1.16.8":
   version "1.16.8"
   resolved "https://registry.npmjs.org/@googlemaps/js-api-loader/-/js-api-loader-1.16.8.tgz"

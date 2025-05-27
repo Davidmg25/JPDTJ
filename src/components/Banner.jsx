@@ -1,7 +1,12 @@
 import { Box, Button, Typography, useMediaQuery, useTheme, Modal } from "@mui/material";
 import { useState } from "react";
 import photo1 from "../img/porshe1.jpg";
+import photo2 from  "../img/g63.avif";
 import ServicesCar from "./ServicesCar"; // Componente de selección de servicios
+import '@fontsource/rajdhani/500.css'; // para subtítulos
+import '@fontsource/rajdhani/700.css'; // para encabezados
+
+
 
 const Banner = () => {
   const theme = useTheme();
@@ -48,15 +53,18 @@ const Banner = () => {
           padding: isMobile ? 0 : 2,
         }}
       >
-        <img
-          src={photo1}
-          alt="Banner"
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            borderRadius: "12px",
-          }}
+      <img
+  src={photo2}
+  alt="Banner"
+  style={{
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+     objectPosition: "10% 60%", 
+    borderRadius: "12px",
+  }}
+/>
+
         />
       </Box>
 
@@ -69,34 +77,50 @@ const Banner = () => {
           padding: isMobile ? "20px 10px" : "0 40px",
         }}
       >
-        <Typography
-          variant={isMobile || isMidScreen ? "h4" : "h2"}
-          sx={{ fontWeight: "bold", mb: 2, color: "white" }}
-        >
-          Welcome to <br /> J&P DETALLING
-        </Typography>
+<Typography
+  variant={isMobile || isMidScreen ? "h4" : "h2"}
+  sx={{
+    fontWeight: 700,
+    mb: 2,
+    color: "white",
+    fontFamily: "'Rajdhani', sans-serif",
+    letterSpacing: 1,
+    textTransform: "uppercase",
+  }}
+>
+  Welcome to <br /> J&P Detailing
+</Typography>
 
-        <Typography
-          variant="body1"
-          sx={{
-            mb: 2,
-            color: "white",
-            fontSize: isMobile ? "1.2rem" : isTablet ? "1.5rem" : "1.8rem",
-          }}
-        >
-          Get your ride shining like new! The best car detailing in town, just one click away.
-        </Typography>
+<Typography
+  variant="body1"
+  sx={{
+    mb: 2,
+    color: "white",
+    fontSize: isMobile ? "1.2rem" : isTablet ? "1.5rem" : "1.8rem",
+    fontWeight: 500,
+    fontFamily: "'Rajdhani', sans-serif",
+    letterSpacing: 0.5,
+    textAlign: "center",
+  }}
+>
+  Get your ride shining like new! The best car detailing in town, just one click away.
+</Typography>
 
-        <Typography
-          variant="body2"
-          sx={{
-            mb: 3,
-            color: "white",
-            fontSize: isMobile ? "1rem" : isTablet ? "1.3rem" : "1.5rem",
-          }}
-        >
-          Car detailing from the comfort of your home or office.
-        </Typography>
+<Typography
+  variant="body2"
+  sx={{
+    mb: 3,
+    color: "white",
+    fontSize: isMobile ? "1rem" : isTablet ? "1.3rem" : "1.5rem",
+    fontWeight: 500,
+    fontFamily: "'Rajdhani', sans-serif",
+    textAlign: "center",
+  }}
+>
+  Car detailing from the comfort of your home or office.
+</Typography>
+
+
 
         <Button
           variant="contained"
@@ -105,6 +129,7 @@ const Banner = () => {
             backgroundColor: "#ffb300",
             color: "#000",
             fontWeight: "bold",
+            fontFamily: "'Rajdhani', sans-serif",
             textTransform: "none",
             borderRadius: "30px",
             padding: "12px 24px",
