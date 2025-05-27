@@ -19,7 +19,7 @@ const Footer = () => {
         {/* Logo / Brand Name */}
         <Grid item xs={12} md={4}>
           <Typography variant="h5" sx={{ color: "#FFC300", fontWeight: "bold", mb: 1 }}>
-            JP Detailing
+            J&P Detailing
           </Typography>
           <Typography variant="body2" sx={{ opacity: 0.8 }}>
             We transform your car with passion and precision. Premium detailing for those who demand the best.
