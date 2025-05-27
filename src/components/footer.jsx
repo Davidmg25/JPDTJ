@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Typography, Link as MuiLink, IconButton } from "@mui/material";
+import { Box, Grid, Typography, IconButton } from "@mui/material";
 import { Facebook, Instagram, WhatsApp } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 
