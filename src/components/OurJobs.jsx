@@ -27,11 +27,11 @@ import job3After from "../img/lambo.jpg";
 
 // Imágenes del carrusel horizontal
 import img1 from "../img/Clean.webp";
-import img2 from "../img/Clean.webp";
-import img3 from "../img/Clean.webp";
-import img4 from "../img/Clean.webp";
-import img5 from "../img/Clean.webp";
-import img6 from "../img/Clean.webp";
+import img2 from "../img/Ram.webp";
+import img3 from "../img/MCCR.webp";
+import img4 from "../img/Mustang.webp";
+import img5 from "../img/Porshec.webp";
+import img6 from "../img/MRC.webp";
 
 gsap.registerPlugin(ScrollTrigger);
 
