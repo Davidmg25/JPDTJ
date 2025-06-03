@@ -28,7 +28,7 @@ import job3After from "../img/lambo.jpg";
 // Imágenes del carrusel horizontal
 import img1 from "../img/Clean.webp";
 import img2 from "../img/Ram.webp";
-import img3 from "../img/MCCR.webp";
+import img3 from "../img/MCCR.webp"
 import img4 from "../img/Mustang.webp";
 import img5 from "../img/Porshec.webp";
 import img6 from "../img/MRC.webp";
@@ -100,6 +100,7 @@ const allJobs = [
 ];
 
 // Componente de galería horizontal
+
 const HorizontalGallery = () => {
   const galleryRef = useRef(null);
 
@@ -110,15 +111,18 @@ const HorizontalGallery = () => {
 
       if (!container || panels.length === 0) return;
 
+      const totalScroll = window.innerWidth * (panels.length - 1);
+
       gsap.to(panels, {
         xPercent: -100 * (panels.length - 1),
-        ease: "none",
+        ease: "power1.inOut",
         scrollTrigger: {
           trigger: container,
           pin: true,
           scrub: 1,
           snap: 1 / (panels.length - 1),
-          end: () => "+=" + container.offsetWidth,
+          start: "top top",
+          end: `+=${totalScroll}`,
         },
       });
     }, galleryRef);
@@ -129,15 +133,45 @@ const HorizontalGallery = () => {
   const images = [img1, img2, img3, img4, img5, img6];
 
   return (
-    <Section ref={galleryRef}>
-      <PanelsContainer>
+    <Box
+      ref={galleryRef}
+      sx={{
+        height: "100vh",
+        overflow: "hidden",
+        position: "relative",
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          height: "100vh",
+          width: `${images.length * 100}vw`, 
+        }}
+      >
         {images.map((img, idx) => (
-          <Panel className="panel" key={idx}>
-            <Image src={img} alt={`Job ${idx + 1}`} />
-          </Panel>
+          <Box
+            key={idx}
+            className="panel"
+            sx={{
+              flex: "0 0 100vw",
+              height: "100vh",
+              position: "relative",
+            }}
+          >
+            <Box
+              component="img"
+              src={img}
+              alt={`Job ${idx + 1}`}
+              sx={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            />
+          </Box>
         ))}
-      </PanelsContainer>
-    </Section>
+      </Box>
+    </Box>
   );
 };
 const VideoShowcase = () => {
@@ -369,8 +403,9 @@ const OurJobs: React.FC = () => {
       
 
       {/* Sección de carrusel horizontal */}
+        <VideoShowcase />
       <HorizontalGallery />
-      <VideoShowcase />
+    
     </>
   );
 };
