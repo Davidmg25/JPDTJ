@@ -32,6 +32,16 @@ const Footer = () => {
             Quick Links
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+          <RouterLink onClick={window.scrollTo({ top: 0, })}
+          to="/"
+          style={{ textDecoration: "none", color: "inherit", opacity: 0.8 }}
+          onMouseEnter={(e) => (e.target.style.color = "#FFC300")}
+          onMouseLeave={(e) => (e.target.style.color = "inherit")}
+           
+          
+            >           
+          Home
+            </RouterLink>
             <RouterLink
                to="/Ourjobs"
               style={{ textDecoration: "none", color: "inherit", opacity: 0.8 }}
