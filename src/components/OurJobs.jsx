@@ -33,6 +33,8 @@ import img4 from "../img/Mustang.webp";
 import img5 from "../img/Porshec.webp";
 import img6 from "../img/MRC.webp";
 
+import vd1 from '../assets/video1.mp4';
+
 gsap.registerPlugin(ScrollTrigger);
 
 // Estilos
@@ -178,21 +180,26 @@ const VideoShowcase = () => {
   const videos = [
     {
       title: "Ceramic Coating in Action",
-      url: "https://www.youtube.com/embed/3A8wS1wUzJk",
+      url: vd1,
+      type: "local",
     },
     {
       title: "Interior Deep Cleaning",
       url: "https://www.youtube.com/embed/kLJCz7nNrzQ",
+      type: "youtube",
     },
     {
       title: "Paint Correction Time-lapse",
       url: "https://www.youtube.com/embed/8VfY7tJ7JwA",
+      type: "youtube",
     },
     {
       title: "Engine Bay Detailing",
       url: "https://www.youtube.com/embed/HrSnyx0df3U",
+      type: "youtube",
     },
   ];
+
   return (
     <Box
       sx={{
@@ -227,20 +234,38 @@ const VideoShowcase = () => {
                   boxShadow: "0 4px 20px rgba(0,0,0,0.6)",
                 }}
               >
-                <iframe
-                  src={video.url}
-                  title={video.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    border: "none",
-                  }}
-                ></iframe>
+                {video.type === "local" ? (
+                  <video
+                    src={video.url}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                ) : (
+                  <iframe
+                    src={video.url}
+                    title={video.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      border: "none",
+                    }}
+                  ></iframe>
+                )}
               </Box>
               <Typography
                 variant="subtitle1"
@@ -255,7 +280,6 @@ const VideoShowcase = () => {
     </Box>
   );
 };
-
 // Componente principal
 const OurJobs: React.FC = () => {
   return (
