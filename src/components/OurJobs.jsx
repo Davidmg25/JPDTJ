@@ -32,8 +32,14 @@ import img3 from "../img/MCCR.webp"
 import img4 from "../img/Mustang.webp";
 import img5 from "../img/Porshec.webp";
 import img6 from "../img/MRC.webp";
+import img7 from "../img/img2.jpg";
+import img8 from "../img/img3.jpg";
+
 
 import vd1 from '../assets/video1.mp4';
+import vd2 from '../assets/video2.mp4';
+import vd3 from '../assets/video3.mp4';
+import vd4 from '../assets/video4.mp4';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -132,7 +138,7 @@ const HorizontalGallery = () => {
     return () => ctx.revert();
   }, []);
 
-  const images = [img1, img2, img3, img4, img5, img6];
+  const images = [img1, img2, img3, img4, img5, img6,img7,img8];
 
   return (
     <Box
@@ -179,24 +185,24 @@ const HorizontalGallery = () => {
 const VideoShowcase = () => {
   const videos = [
     {
-      title: "Ceramic Coating in Action",
+      title: "Shampoo seats in Action",
       url: vd1,
       type: "local",
     },
     {
       title: "Interior Deep Cleaning",
-      url: "https://www.youtube.com/embed/kLJCz7nNrzQ",
-      type: "youtube",
+      url: vd2,
+      type: "local",
     },
     {
       title: "Paint Correction Time-lapse",
-      url: "https://www.youtube.com/embed/8VfY7tJ7JwA",
-      type: "youtube",
+      url: vd3,
+      type: "local",
     },
     {
-      title: "Engine Bay Detailing",
-      url: "https://www.youtube.com/embed/HrSnyx0df3U",
-      type: "youtube",
+      title: " Ceramic Coating in Action",
+      url: vd4,
+      type: "local",
     },
   ];
 
