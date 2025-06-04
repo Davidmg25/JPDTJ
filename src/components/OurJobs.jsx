@@ -83,30 +83,30 @@ const HorizontalGallery = () => {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const container = galleryRef.current;
-      const panels = gsap.utils.toArray(".panel");
+      const panels = container?.querySelectorAll(".panel");
 
-      if (!container || panels.length === 0) return;
+      if (!container || !panels || panels.length === 0) return;
 
-      const totalScroll = window.innerWidth * (panels.length - 1);
+      const totalScroll = container.scrollWidth - window.innerWidth;
 
       gsap.to(panels, {
-        xPercent: -100 * (panels.length - 1),
-        ease: "power1.inOut",
-        scrollTrigger: {
-          trigger: container,
-          pin: false,
-          scrub: 1,
-          snap: 1 / (panels.length - 1),
-          start: "top top",
-          end: `+=${totalScroll}`,
-        },
-      });
-    }, galleryRef);
+      xPercent: -100 * (panels.length - 1),
+      ease: "power1.inOut",
+      scrollTrigger: {
+        trigger: container,
+        pin: true,
+        scrub: 1,
+        start: "top top",
+        end: () => `+=${totalScroll}`,pin:false,
+        invalidateOnRefresh: true,
+      },
+    });
 
-    return () => {
-      ctx.revert();
-      ScrollTrigger.getAll().forEach((st) => st.kill()); // 🔧 Solución aquí
-    };
+    ScrollTrigger.refresh();
+  }, galleryRef);
+
+  return () => ctx.revert();
+   
   }, []);
 
   const images = [img1, img2, img3, img4, img5, img6, img7, img8];
@@ -123,7 +123,7 @@ const HorizontalGallery = () => {
       <Box
         sx={{
           display: "flex",
-          height: "100vh",
+          height: "100%",
           width: `${images.length * 100}vw`,
         }}
       >
@@ -133,7 +133,7 @@ const HorizontalGallery = () => {
             className="panel"
             sx={{
               flex: "0 0 100vw",
-              height: "100vh",
+              height: "100%",
               position: "relative",
             }}
           >
@@ -153,6 +153,7 @@ const HorizontalGallery = () => {
     </Box>
   );
 };
+
 
 // Video showcase
 const VideoShowcase = () => {
@@ -374,7 +375,7 @@ const OurJobs = () => {
 
       <VideoShowcase />
       <HorizontalGallery />
-       <Box sx={{ height: "10vh", backgroundColor: "#000" }} />
+       <Box sx={{ height: "1vh", backgroundColor: "#000" }} />
          <Footer/>
     </>
     
