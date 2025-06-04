@@ -11,9 +11,9 @@ import {
   Stack,
 } from "@mui/material";
 import PhoneIcon from "@mui/icons-material/Phone";
-import { styled } from "@mui/system";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
+import Footer from "./footer";
 
 // Registrar GSAP plugin
 
@@ -28,50 +28,19 @@ import job3After from "../img/lambo.jpg";
 // Imágenes del carrusel horizontal
 import img1 from "../img/Clean.webp";
 import img2 from "../img/Ram.webp";
-import img3 from "../img/MCCR.webp"
+import img3 from "../img/MCCR.webp";
 import img4 from "../img/Mustang.webp";
 import img5 from "../img/Porshec.webp";
 import img6 from "../img/MRC.webp";
-import img7 from "../img/img2.jpg";
-import img8 from "../img/img3.jpg";
-
-
-import vd1 from '../assets/video1.mp4';
-import vd2 from '../assets/video2.mp4';
-import vd3 from '../assets/video3.mp4';
-import vd4 from '../assets/video4.mp4';
+import img7 from "../img/Ram.webp";
+import img8 from "../img/img2.jpg";
+import vd1 from "../assets/video1.mp4";
+import vd2 from "../assets/video2.mp4";
+import vd3 from "../assets/video3.mp4";
+import vd4 from "../assets/video4.mp4";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Estilos
-const Section = styled(Box)({
-  backgroundColor: "#000",
-  height: "100vh",
-  overflow: "hidden",
-});
-
-const PanelsContainer = styled(Box)({
-  display: "flex",
-  height: "100%",
-});
-
-const Panel = styled(Box)({
-  minWidth: "100vw",
-  height: "100%",
-  flexShrink: 0,
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  position: "relative",
-});
-
-const Image = styled("img")({
-  width: "80%",
-  height: "80%",
-  objectFit: "cover",
-  borderRadius: "16px",
-  boxShadow: "0 10px 20px rgba(0,0,0,0.5)",
-});
 
 // Datos de trabajos
 const allJobs = [
@@ -107,8 +76,7 @@ const allJobs = [
   },
 ];
 
-// Componente de galería horizontal
-
+// Carrusel horizontal con GSAP
 const HorizontalGallery = () => {
   const galleryRef = useRef(null);
 
@@ -126,7 +94,7 @@ const HorizontalGallery = () => {
         ease: "power1.inOut",
         scrollTrigger: {
           trigger: container,
-          pin: true,
+          pin: false,
           scrub: 1,
           snap: 1 / (panels.length - 1),
           start: "top top",
@@ -135,10 +103,13 @@ const HorizontalGallery = () => {
       });
     }, galleryRef);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      ScrollTrigger.getAll().forEach((st) => st.kill()); // 🔧 Solución aquí
+    };
   }, []);
 
-  const images = [img1, img2, img3, img4, img5, img6,img7,img8];
+  const images = [img1, img2, img3, img4, img5, img6, img7, img8];
 
   return (
     <Box
@@ -153,7 +124,7 @@ const HorizontalGallery = () => {
         sx={{
           display: "flex",
           height: "100vh",
-          width: `${images.length * 100}vw`, 
+          width: `${images.length * 100}vw`,
         }}
       >
         {images.map((img, idx) => (
@@ -182,28 +153,14 @@ const HorizontalGallery = () => {
     </Box>
   );
 };
+
+// Video showcase
 const VideoShowcase = () => {
   const videos = [
-    {
-      title: "Shampoo seats in Action",
-      url: vd1,
-      type: "local",
-    },
-    {
-      title: "Interior Deep Cleaning",
-      url: vd2,
-      type: "local",
-    },
-    {
-      title: "Paint Correction Time-lapse",
-      url: vd3,
-      type: "local",
-    },
-    {
-      title: " Ceramic Coating in Action",
-      url: vd4,
-      type: "local",
-    },
+    { title: "Shampoo seats in Action", url: vd1, type: "local" },
+    { title: "Interior Deep Cleaning", url: vd2, type: "local" },
+    { title: "Paint Correction Time-lapse", url: vd3, type: "local" },
+    { title: " Ceramic Coating in Action", url: vd4, type: "local" },
   ];
 
   return (
@@ -234,44 +191,27 @@ const VideoShowcase = () => {
               <Box
                 sx={{
                   position: "relative",
-                  paddingTop: "56.25%", // 16:9 aspect ratio
+                  paddingTop: "56.25%",
                   borderRadius: 3,
                   overflow: "hidden",
                   boxShadow: "0 4px 20px rgba(0,0,0,0.6)",
                 }}
               >
-                {video.type === "local" ? (
-                  <video
-                    src={video.url}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    style={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
-                ) : (
-                  <iframe
-                    src={video.url}
-                    title={video.title}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    style={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      width: "100%",
-                      height: "100%",
-                      border: "none",
-                    }}
-                  ></iframe>
-                )}
+                <video
+                  src={video.url}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
               </Box>
               <Typography
                 variant="subtitle1"
@@ -286,8 +226,9 @@ const VideoShowcase = () => {
     </Box>
   );
 };
+
 // Componente principal
-const OurJobs: React.FC = () => {
+const OurJobs = () => {
   return (
     <>
       <Box
@@ -430,13 +371,13 @@ const OurJobs: React.FC = () => {
           </Grid>
         </Box>
       </Box>
-      
 
-      {/* Sección de carrusel horizontal */}
-        <VideoShowcase />
+      <VideoShowcase />
       <HorizontalGallery />
-    
+       <Box sx={{ height: "10vh", backgroundColor: "#000" }} />
+         <Footer/>
     </>
+    
   );
 };
 

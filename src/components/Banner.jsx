@@ -14,10 +14,9 @@ const Banner = () => {
   const isTablet = useMediaQuery(theme.breakpoints.between("sm", "lg")); // 600px - 1200px
   const isMidScreen = useMediaQuery("(max-width: 950px)");
 
-  // Estado para mostrar el modal de reserva
   const [openModal, setOpenModal] = useState(false);
 
-  // Función para abrir el modal de reserva
+  
   const handleBookingClick = () => {
     setOpenModal(true); // Muestra el modal con el formulario de selección de servicios
   };
