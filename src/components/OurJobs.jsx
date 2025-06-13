@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import {
   Box,
   Typography,
@@ -32,8 +32,8 @@ import img3 from "../img/MCCR.webp";
 import img4 from "../img/Mustang.webp";
 import img5 from "../img/Porshec.webp";
 import img6 from "../img/MRC.webp";
-import img7 from "../img/Ram.webp";
-import img8 from "../img/img2.jpg";
+import img7 from "../img/mcrclin.webp";
+import img8 from "../img/Carclinjp.webp";
 import vd1 from "../assets/video1.mp4";
 import vd2 from "../assets/video2.mp4";
 import vd3 from "../assets/video3.mp4";
@@ -76,37 +76,32 @@ const allJobs = [
   },
 ];
 
-// Carrusel horizontal con GSAP
+
 const HorizontalGallery = () => {
   const galleryRef = useRef(null);
+  const containerRef = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      const container = galleryRef.current;
       const panels = gsap.utils.toArray(".panel");
 
-      if (!container || panels.length === 0) return;
-
-      const totalScroll = window.innerWidth * (panels.length - 1);
+      if (!containerRef.current || panels.length === 0) return;
 
       gsap.to(panels, {
         xPercent: -100 * (panels.length - 1),
         ease: "power1.inOut",
         scrollTrigger: {
-          trigger: container,
+          trigger: galleryRef.current,
           pin: true,
           scrub: 1,
           snap: 1 / (panels.length - 1),
           start: "top top",
-          end: `+=${totalScroll}`,pin:false,
+          end: () => `+=${window.innerWidth * (panels.length - 1)}`,
         },
       });
     }, galleryRef);
 
-    return () => {
-      ctx.revert();
-      ScrollTrigger.getAll().forEach((st) => st.kill()); // 🔧 Solución aquí
-    };
+    return () => ctx.revert(); // elimina animaciones y trigger sin errores
   }, []);
 
   const images = [img1, img2, img3, img4, img5, img6, img7, img8];
@@ -121,6 +116,7 @@ const HorizontalGallery = () => {
       }}
     >
       <Box
+        ref={containerRef}
         sx={{
           display: "flex",
           height: "100vh",
@@ -150,9 +146,11 @@ const HorizontalGallery = () => {
           </Box>
         ))}
       </Box>
+      
     </Box>
   );
 };
+
 
 // Video showcase
 const VideoShowcase = () => {
