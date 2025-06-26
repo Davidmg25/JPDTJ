@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef } from "react";
+import React, { useEffect,useLayoutEffect, useRef } from "react";
 import {
   Box,
   Typography,
@@ -18,12 +18,12 @@ import Footer from "./footer";
 // Registrar GSAP plugin
 
 // Imágenes del showcase antes/después
-import job1Before from "../img/carro1.jpg";
-import job1After from "../img/carro1.jpg";
+import job1Before from "../img/wheelssc.avif";
+import job1After from "../img/Wheelsclean.avif";
 import job2Before from "../img/porshe1.jpg";
 import job2After from "../img/porshe1.jpg";
-import job3Before from "../img/lambo.jpg";
-import job3After from "../img/lambo.jpg";
+import job3Before from "../img/PaintCM.avif";
+import job3After from "../img/PaintCR.avif";
 
 // Imágenes del carrusel horizontal
 import img1 from "../img/Clean.webp";
@@ -38,17 +38,21 @@ import vd1 from "../assets/video1.mp4";
 import vd2 from "../assets/video2.mp4";
 import vd3 from "../assets/video3.mp4";
 import vd4 from "../assets/video4.mp4";
+import vd5 from "../assets/videowheelesclean.mp4";
+import vd6 from "../assets/videowhelessc.mp4";
+
 
 gsap.registerPlugin(ScrollTrigger);
 
 
 // Datos de trabajos
 const allJobs = [
+  
   {
     id: 1,
-    title: "Bentley - Ceramic Finish",
+    title: "Honda - Wheels Finish",
     description:
-      "Complete ceramic coating to protect the paint and enhance the gloss of the car.",
+      "Deep wheel clean with ceramic coating for shine and protection.",
     beforeImage: job1Before,
     afterImage: job1After,
     whatsappLink:
@@ -56,7 +60,7 @@ const allJobs = [
   },
   {
     id: 2,
-    title: "Lamborghini Urus - Paint Correction",
+    title: "Range Rover Black - Paint Correction",
     description:
       "Restoring the shine and smoothness of the paint, removing swirls and scratches.",
     beforeImage: job3Before,
@@ -69,14 +73,163 @@ const allJobs = [
     title: "Porsche 911 - Deep Interior Detail",
     description:
       "Deep clean and restoration of the interior, including leather conditioning and carpet shampoo.",
-    beforeImage: job2Before,
-    afterImage: job2After,
+    beforeImage: job2After,
+    afterImage: job2Before,
     whatsappLink:
       "https://wa.me/17865990988?text=Hello%2C%20I%20would%20like%20more%20information%20about%20JP%20Detailing.",
   },
 ];
+const beforeAfterVideos = [
+  {
+    id: 1,
+    title: "Wheels - Before and After",
+    description: "Deep wheel cleaning and ceramic coating.",
+    beforeVideo: vd6,
+    afterVideo: vd5,
+  },
+  {
+    id: 2,
+    title: "Another Wheels Project",
+    description: "Same process, same shine. Different vehicle.",
+    beforeVideo: vd6,
+    afterVideo: vd5,
+  },
+];
+const BeforeAfterVideos = () => {
+  const containerRef = useRef(null);
 
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(".beforeAfterCard", {
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 80%", // inicia cuando está cerca de entrar a pantalla
+        },
+        opacity: 0,
+        y: 60,
+        scale: 0.95,
+        duration: 0.8,
+        ease: "power2.out",
+        stagger: 0.2,
+      });
+    }, containerRef);
 
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <Box
+      ref={containerRef}
+      sx={{
+        py: 8,
+        px: { xs: 2, md: 6 },
+        backgroundColor: "#0D0D0D",
+        color: "#fff",
+      }}
+    >
+      <Typography
+        variant="h4"
+        gutterBottom
+        sx={{
+          fontWeight: 700,
+          mb: 6,
+          textAlign: "center",
+          fontFamily: "'FC 300', sans-serif",
+          color: "#FFC300",
+        }}
+      >
+        🎬 Before & After Videos
+      </Typography>
+
+      <Grid container spacing={5} justifyContent="center">
+        {beforeAfterVideos.map((job) => (
+          <Grid item xs={12} md={6} key={job.id}>
+            <Card
+              className="beforeAfterCard"
+              sx={{
+                backgroundColor: "#1a1a1a",
+                p: 3,
+                borderRadius: 4,
+                boxShadow: "0 10px 30px rgba(0,0,0,0.6)",
+              }}
+            >
+              <Typography
+                variant="h6"
+                sx={{
+                  mb: 1,
+                  color: "#FFC300",
+                  fontFamily: "'FC 300', sans-serif",
+                }}
+              >
+                {job.title}
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{ mb: 3, color: "#bbb", lineHeight: 1.6 }}
+              >
+                {job.description}
+              </Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <Typography
+                    variant="caption"
+                    display="block"
+                    gutterBottom
+                    sx={{ color: "#888", textAlign: "center", mb: 1 }}
+                  >
+                    Before
+                  </Typography>
+                  <Box
+                    sx={{
+                      overflow: "hidden",
+                      borderRadius: 2,
+                      boxShadow: "0 4px 12px rgba(0,0,0,0.4)",
+                    }}
+                  >
+                    <video
+                      src={job.beforeVideo}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      style={{ width: "100%", display: "block" }}
+                    />
+                  </Box>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography
+                    variant="caption"
+                    display="block"
+                    gutterBottom
+                    sx={{ color: "#888", textAlign: "center", mb: 1 }}
+                  >
+                    After
+                  </Typography>
+                  <Box
+                    sx={{
+                      overflow: "hidden",
+                      borderRadius: 2,
+                      boxShadow: "0 4px 12px rgba(0,0,0,0.4)",
+                    }}
+                  >
+                    <video
+                      src={job.afterVideo}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      style={{ width: "100%", display: "block" }}
+                    />
+                  </Box>
+                </Grid>
+              </Grid>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
+  );
+};
 const HorizontalGallery = () => {
   const galleryRef = useRef(null);
   const containerRef = useRef(null);
@@ -101,7 +254,7 @@ const HorizontalGallery = () => {
       });
     }, galleryRef);
 
-    return () => ctx.revert(); // elimina animaciones y trigger sin errores
+    return () => ctx.revert(); 
   }, []);
 
   const images = [img1, img2, img3, img4, img5, img6, img7, img8];
@@ -129,7 +282,7 @@ const HorizontalGallery = () => {
             className="panel"
             sx={{
               flex: "0 0 100vw",
-              height: "100vh",
+              height: "110%",
               position: "relative",
             }}
           >
@@ -159,6 +312,8 @@ const VideoShowcase = () => {
     { title: "Interior Deep Cleaning", url: vd2, type: "local" },
     { title: "Paint Correction Time-lapse", url: vd3, type: "local" },
     { title: " Ceramic Coating in Action", url: vd4, type: "local" },
+
+
   ];
 
   return (
@@ -369,7 +524,7 @@ const OurJobs = () => {
           </Grid>
         </Box>
       </Box>
-
+      <BeforeAfterVideos />
       <VideoShowcase />
       <HorizontalGallery />
       <Footer/>
