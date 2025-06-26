@@ -24,7 +24,7 @@ const packages = [
     tagline: "Start Fresh, Feel Sharp",
     description:
       "Ideal for the everyday driver who wants to feel clean and confident. A quick refresh that brings back the shine and comfort your car deserves.",
-    priceFrom: "$60",
+    priceFrom: "$65",
     mediaUrl: carro1,
   },
   {
@@ -33,7 +33,7 @@ const packages = [
     tagline: "Bring Back the Wow",
     description:
       "Designed for busy city cars that need that extra love. We clean, condition and revive the inside and out so your ride looks like new again.",
-    priceFrom: "$109",
+    priceFrom: "$119",
     mediaUrl: ferrari,
   },
   {
@@ -42,7 +42,7 @@ const packages = [
     tagline: "Because Details Matter",
     description:
       "For those who settle for nothing but excellence. Paint decontamination, deep leather care, and long-lasting shine – we go the extra mile, so your car does too.",
-    priceFrom: "$165",
+    priceFrom: "$179",
     mediaUrl: porshe,
   },
   {

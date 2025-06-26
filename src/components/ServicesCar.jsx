@@ -23,7 +23,7 @@ const servicesData = {
       id: 1,
       title: "BASIC REFRESH",
       subtitle: "Start Fresh, Feel Sharp",
-      price: "Starting at $60.00",
+      price: "Starting at $65.00",
       features: [
         "✨ EXTERIOR PROCESS",
         "🪟 Clean windows",
@@ -48,7 +48,7 @@ const servicesData = {
       id: 2,
       title: "MINI DETAIL",
       subtitle: "Quick Full Detail",
-      price: "Starting at $109.00",
+      price: "Starting at $119.00",
       features: [
         "✨ EXTERIOR PROCESS",
         "🧼 Full exterior foam hand wash",
@@ -73,7 +73,7 @@ const servicesData = {
       id: 3,
       title: "MEDIUM DETAIL",
       subtitle: "Premium Full Detail",
-      price: "Starting at $165.00",
+      price: "Starting at $179.00",
       features: [
         "✨ EXTERIOR PROCESS",
         "🚿 Pre-rinse, signature foam bath & full hand wash",

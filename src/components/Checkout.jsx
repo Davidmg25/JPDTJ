@@ -96,7 +96,7 @@ const Checkout = () => {
     const basePrice = extractPrice(selectedPackage?.price);
     let adjusted = basePrice;
     if (carType.toLowerCase() === "suv") adjusted += 10;
-    if (["pickup", "truck"].includes(carType.toLowerCase())) adjusted += 15;
+    if (["pickup", "truck"].includes(carType.toLowerCase())) adjusted += 20;
     return adjusted;
   };
 

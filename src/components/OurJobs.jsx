@@ -40,7 +40,8 @@ import vd3 from "../assets/video3.mp4";
 import vd4 from "../assets/video4.mp4";
 import vd5 from "../assets/videowheelesclean.mp4";
 import vd6 from "../assets/videowhelessc.mp4";
-
+import vd8 from "../assets/videowheelesclean.mp4";
+import vd7 from "../assets/videowhelessc.mp4";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -91,8 +92,8 @@ const beforeAfterVideos = [
     id: 2,
     title: "Another Wheels Project",
     description: "Same process, same shine. Different vehicle.",
-    beforeVideo: vd6,
-    afterVideo: vd5,
+    beforeVideo: vd7,
+    afterVideo: vd8,
   },
 ];
 const BeforeAfterVideos = () => {
